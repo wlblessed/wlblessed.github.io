@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>WRBLESSED — catálogo</title>
+    <meta name="description" content="Catálogo de demonstração da WRBLESSED: camisetas, polos e conjuntos prontos para entrega." />
+    <link rel="icon" href="assets/tee-box.svg" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="WRBLESSED início">
+        <span>WR</span><b>BLESSED</b>
+      </a>
+      <nav class="topnav" aria-label="Categorias">
+        <a href="#catalogo" data-cat="camisetas">Camisetas</a>
+        <a href="#catalogo" data-cat="polos">Polos</a>
+        <a href="#catalogo" data-cat="conjuntos">Conjuntos</a>
+      </nav>
+      <button class="cart-btn" id="cartOpen" type="button" aria-label="Abrir sacola">
+        Sacola <span class="badge" id="cartCount">0</span>
+      </button>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-text">
+          <p class="eyebrow">Coleção 01 — peças prontas para entrega</p>
+          <h1>Peças que carregam<br /><em>significado</em>.</h1>
+          <p class="lede">
+            Camisetas, polos e conjuntos escolhidos peça por peça. Tamanhos do P ao
+            GG, pronta entrega e troca em 30 dias.
+          </p>
+          <div class="hero-actions">
+            <a class="btn primary" href="#catalogo">Ver catálogo</a>
+            <a class="btn ghost" href="#catalogo" data-cat="polos">Polos</a>
+          </div>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <img src="assets/produtos/camiseta-lacoste-preta.jpg" alt="" width="960" height="1280" />
+          <span class="hero-stamp">DROP<br />01</span>
+        </div>
+      </section>
+
+      <section class="catalogo" id="catalogo">
+        <div class="section-head">
+          <div>
+            <h2>Catálogo</h2>
+            <p class="count" id="resultCount"></p>
+          </div>
+          <label class="search">
+            <span class="sr-only">Buscar produto</span>
+            <input id="search" type="search" placeholder="Buscar peça..." autocomplete="off" />
+          </label>
+        </div>
+
+        <div class="filters" id="filters" role="tablist" aria-label="Filtrar por categoria"></div>
+
+        <div class="grid" id="grid" aria-live="polite"></div>
+        <p class="empty" id="empty" hidden>Nada encontrado. Tente outra categoria ou busca.</p>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>WRBLESSED © 2026 — catálogo de demonstração</p>
+      <p>Preços ilustrativos · frete grátis acima de R$ 299 · troca em 30 dias</p>
+    </footer>
+
+    <div class="drawer-backdrop" id="backdrop" hidden></div>
+    <aside class="drawer" id="drawer" aria-label="Sacola" aria-hidden="true">
+      <div class="drawer-head">
+        <h3>Sacola</h3>
+        <button class="icon-btn" id="cartClose" type="button" aria-label="Fechar sacola">✕</button>
+      </div>
+      <div class="drawer-body" id="cartItems"></div>
+      <div class="drawer-foot">
+        <div class="line"><span>Subtotal</span><b id="subtotal">R$ 0,00</b></div>
+        <p class="ship" id="shipNote"></p>
+
+        <fieldset class="pay" id="pay">
+          <legend>Pagamento</legend>
+          <label class="pay-opt">
+            <input type="radio" name="pay" value="pix" checked />
+            <span><b>Pix</b><small>aprovação na hora</small></span>
+          </label>
+          <label class="pay-opt">
+            <input type="radio" name="pay" value="cartao" />
+            <span><b>Cartão de crédito</b><small>link seguro pela loja</small></span>
+          </label>
+        </fieldset>
+
+        <div class="pay-extra" id="payExtra"></div>
+
+        <button class="btn wa block" id="checkout" type="button">Comprar pelo WhatsApp</button>
+        <p class="fine">O pedido abre no WhatsApp. Não pedimos dados do cartão aqui.</p>
+      </div>
+    </aside>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
