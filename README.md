@@ -5,8 +5,8 @@ As fotos dos produtos vêm de `imagens/` e foram copiadas para `assets/produtos/
 
 ## Publicado
 
-- site: https://wlblessed.github.io/
-- repositório: https://github.com/wlblessed/wlblessed.github.io (branch `main`, raiz)
+- site: https://wrblessed.github.io/
+- repositório: https://github.com/wrblessed/wrblessed.github.io (branch `main`, raiz)
 - GitHub Pages: `build_type: legacy`, branch `main` path `/`, `.nojekyll` na raiz
 
 Para publicar uma mudança: `git add -A && git commit -m "..." && git push` — o
