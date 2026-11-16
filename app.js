@@ -1,93 +1,203 @@
-// Catálogo WRBLESSED — estado da loja, filtros e sacola.
+// Catálogo WRBLESSED — lista de interesse, filtros e galeria.
 // Dados estáticos: nenhum backend, nenhuma dependência.
 
-const BRL = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
-const money = (n) => BRL.format(n);
-const STORAGE_KEY = "wrblessed-cart-v1";
-const FREE_SHIPPING = 299;
-// Pedido vira mensagem pronta no WhatsApp da loja.
+const STORAGE_KEY = "wrblessed-list-v1";
+// Lista vira mensagem pronta no WhatsApp da loja.
 const WHATSAPP_NUMBER = "5531972014470";
-// Chave Pix da loja (formato telefone). Trocar aqui quando a loja definir outra.
-const PIX_KEY = "31972014470";
-const MAX_INSTALLMENTS = 3;
 
-/** @type {{id:string,name:string,category:string,price:number,oldPrice?:number,art:string,desc:string,sizes:string[],tag?:string}[]} */
 const PRODUCTS = [
   {
-    id: "camiseta-adidas-azul",
-    name: "Camiseta Adidas Trefoil Azul",
-    category: "camisetas",
-    price: 149,
-    art: "assets/produtos/camiseta-adidas-azul.jpg",
-    desc: "Algodão macio, gola redonda e trefoil bordado no peito.",
-    sizes: ["P", "M", "G", "GG"],
-    tag: "Novo",
-  },
-  {
-    id: "camiseta-ax-bege",
-    name: "Camiseta AX Off-White",
-    category: "camisetas",
-    price: 159,
-    art: "assets/produtos/camiseta-ax-bege.jpg",
-    desc: "Estampa AX frontal em tom grafite, caimento reto.",
-    sizes: ["P", "M", "G", "GG"],
-  },
-  {
-    id: "camiseta-lacoste-preta",
-    name: "Camiseta Lacoste Preta",
-    category: "camisetas",
-    price: 169,
-    art: "assets/produtos/camiseta-lacoste-preta.jpg",
-    desc: "Preta com logo crocodilo em silk, clássica e versátil.",
-    sizes: ["P", "M", "G", "GG"],
-  },
-  {
-    id: "kit-lacoste-tres-cores",
-    name: "Kit Lacoste French Sportswear",
-    category: "camisetas",
-    price: 399,
-    oldPrice: 447,
-    art: "assets/produtos/kit-lacoste-tres-cores.jpg",
-    desc: "Três camisetas: azul claro, marinho e off-white. Com etiqueta.",
+    id: "regata-dri-fit",
+    name: "Regata Dri Fit",
+    category: "regatas",
+    desc: "Malha dri fit lisa, alças finas.",
     sizes: ["M", "G", "GG"],
-    tag: "-11%",
+    art: "assets/produtos/regata-dri-fit-1.jpg",
+    gallery: [
+      "assets/produtos/regata-dri-fit-1.jpg",
+      "assets/produtos/regata-dri-fit-2.jpg",
+      "assets/produtos/regata-dri-fit-3.jpg",
+      "assets/produtos/regata-dri-fit-4.jpg",
+    ],
   },
   {
-    id: "polo-nautica-marinho",
-    name: "Polo Náutica Marinho",
-    category: "polos",
-    price: 189,
-    art: "assets/produtos/polo-nautica-marinho.jpg",
-    desc: "Piquet marinho com faixa vermelha na manga e bordado no peito.",
+    id: "regata-canelada",
+    name: "Regata Canelada",
+    category: "regatas",
+    desc: "Canelada, modelagem ajustada ao corpo.",
     sizes: ["P", "M", "G", "GG"],
+    art: "assets/produtos/regata-canelada-1.jpg",
+    gallery: [
+      "assets/produtos/regata-canelada-1.jpg",
+      "assets/produtos/regata-canelada-2.jpg",
+      "assets/produtos/regata-canelada-3.jpg",
+      "assets/produtos/regata-canelada-4.jpg",
+    ],
   },
   {
-    id: "polo-lacoste-bege",
-    name: "Polo Lacoste Beige",
+    id: "camiseta-pima",
+    name: "Camiseta Pima",
+    category: "camisetas",
+    desc: "Malha fio 40.1 com elastano, estampa bordada.",
+    sizes: ["M", "G", "GG"],
+    art: "assets/produtos/camiseta-pima-1.jpg",
+    gallery: [
+      "assets/produtos/camiseta-pima-1.jpg",
+      "assets/produtos/camiseta-pima-2.jpg",
+      "assets/produtos/camiseta-pima-3.jpg",
+      "assets/produtos/camiseta-pima-4.jpg",
+    ],
+  },
+  {
+    id: "camisa-30-1",
+    name: "Camisa Malha 30.1",
+    category: "camisetas",
+    desc: "Malha 30.1, estampas variadas.",
+    sizes: ["M", "G", "GG"],
+    art: "assets/produtos/camisa-30-1-1.jpg",
+    gallery: [
+      "assets/produtos/camisa-30-1-1.jpg",
+      "assets/produtos/camisa-30-1-2.jpg",
+      "assets/produtos/camisa-30-1-3.jpg",
+      "assets/produtos/camisa-30-1-4.jpg",
+      "assets/produtos/camisa-30-1-5.jpg",
+      "assets/produtos/camisa-30-1-6.jpg",
+    ],
+  },
+  {
+    id: "camisa-tailandesa",
+    name: "Camisa Tailandesa",
+    category: "camisetas",
+    desc: "Padrão tailandesa 1.1, tecido leve.",
+    sizes: ["P", "M", "G", "GG", "G1"],
+    art: "assets/produtos/camisa-tailandesa-1.jpg",
+    gallery: [
+      "assets/produtos/camisa-tailandesa-1.jpg",
+      "assets/produtos/camisa-tailandesa-2.jpg",
+    ],
+  },
+  {
+    id: "camisa-lacoste-pima",
+    name: "Camisa Lacoste Pima",
+    category: "camisetas",
+    desc: "Malha pima, com etiqueta e sacola.",
+    sizes: ["M", "G", "GG"],
+    art: "assets/produtos/camisa-lacoste-pima-1.jpg",
+    gallery: [
+      "assets/produtos/camisa-lacoste-pima-1.jpg",
+      "assets/produtos/camisa-lacoste-pima-2.jpg",
+      "assets/produtos/camisa-lacoste-pima-3.jpg",
+      "assets/produtos/camisa-lacoste-pima-4.jpg",
+      "assets/produtos/camisa-lacoste-pima-5.jpg",
+      "assets/produtos/camisa-lacoste-pima-6.jpg",
+    ],
+  },
+  {
+    id: "polo-pique",
+    name: "Polo Piquê",
     category: "polos",
-    price: 219,
-    art: "assets/produtos/polo-lacoste-bege.jpg",
-    desc: "Bicolor bege e off-white, gola estruturada e crocodilo bordado.",
-    sizes: ["P", "M", "G", "GG"],
-    tag: "Novo",
+    desc: "Piquê duplo com 3% de elastano.",
+    sizes: ["G", "GG"],
+    art: "assets/produtos/polo-pique-1.jpg",
+    gallery: [
+      "assets/produtos/polo-pique-1.jpg",
+      "assets/produtos/polo-pique-2.jpg",
+      "assets/produtos/polo-pique-3.jpg",
+      "assets/produtos/polo-pique-4.jpg",
+    ],
   },
   {
-    id: "polo-lacoste-azul",
-    name: "Polo Lacoste Azul Croco",
-    category: "polos",
-    price: 229,
-    art: "assets/produtos/polo-lacoste-azul.jpg",
-    desc: "Azul claro com crocodilo grande aplicado na lateral.",
-    sizes: ["P", "M", "G", "GG"],
+    id: "bermudao-elastano",
+    name: "Bermudão Elastano",
+    category: "bermudas",
+    desc: "Bolso lateral e cordinha na cintura.",
+    sizes: ["M", "G", "GG", "EXG"],
+    art: "assets/produtos/bermudao-elastano-1.jpg",
+    gallery: [
+      "assets/produtos/bermudao-elastano-1.jpg",
+      "assets/produtos/bermudao-elastano-2.jpg",
+      "assets/produtos/bermudao-elastano-3.jpg",
+      "assets/produtos/bermudao-elastano-4.jpg",
+      "assets/produtos/bermudao-elastano-5.jpg",
+      "assets/produtos/bermudao-elastano-6.jpg",
+    ],
   },
   {
-    id: "conjunto-streetwear",
-    name: "Conjunto Streetwear Estampado",
+    id: "bermuda-elastano",
+    name: "Bermuda Elastano",
+    category: "bermudas",
+    desc: "Bolso lateral, cordinha e símbolo emborrachado.",
+    sizes: ["M", "G", "GG"],
+    art: "assets/produtos/bermuda-elastano-1.jpg",
+    gallery: [
+      "assets/produtos/bermuda-elastano-1.jpg",
+      "assets/produtos/bermuda-elastano-2.jpg",
+      "assets/produtos/bermuda-elastano-3.jpg",
+      "assets/produtos/bermuda-elastano-4.jpg",
+      "assets/produtos/bermuda-elastano-5.jpg",
+      "assets/produtos/bermuda-elastano-6.jpg",
+    ],
+  },
+  {
+    id: "short-praia",
+    name: "Short Praia",
+    category: "bermudas",
+    desc: "Tactel, cordinha e bolso lateral.",
+    sizes: ["M", "G", "GG"],
+    art: "assets/produtos/short-praia-1.jpg",
+    gallery: [
+      "assets/produtos/short-praia-1.jpg",
+      "assets/produtos/short-praia-2.jpg",
+      "assets/produtos/short-praia-3.jpg",
+      "assets/produtos/short-praia-4.jpg",
+      "assets/produtos/short-praia-5.jpg",
+      "assets/produtos/short-praia-6.jpg",
+    ],
+  },
+  {
+    id: "calca-jeans",
+    name: "Calça Jeans",
+    category: "calcas",
+    desc: "Modelo jogador, lavagens variadas.",
+    sizes: ["38", "40", "42", "44", "46", "48"],
+    art: "assets/produtos/calca-jeans-1.jpg",
+    gallery: [
+      "assets/produtos/calca-jeans-1.jpg",
+      "assets/produtos/calca-jeans-2.jpg",
+      "assets/produtos/calca-jeans-3.jpg",
+      "assets/produtos/calca-jeans-4.jpg",
+      "assets/produtos/calca-jeans-5.jpg",
+      "assets/produtos/calca-jeans-6.jpg",
+    ],
+  },
+  {
+    id: "conjunto-dry-fit",
+    name: "Conjunto Dry Fit",
     category: "conjuntos",
-    price: 259,
-    art: "assets/produtos/conjunto-streetwear.jpg",
-    desc: "Conjunto de camiseta e short em malha leve: xadrez, monograma ou floral.",
-    sizes: ["P", "M", "G"],
+    desc: "Camiseta e bermuda em dry fit.",
+    sizes: ["P", "M", "G", "GG"],
+    art: "assets/produtos/conjunto-dry-fit-1.jpg",
+    gallery: [
+      "assets/produtos/conjunto-dry-fit-1.jpg",
+      "assets/produtos/conjunto-dry-fit-2.jpg",
+      "assets/produtos/conjunto-dry-fit-3.jpg",
+      "assets/produtos/conjunto-dry-fit-4.jpg",
+      "assets/produtos/conjunto-dry-fit-5.jpg",
+      "assets/produtos/conjunto-dry-fit-6.jpg",
+    ],
+  },
+  {
+    id: "corta-vento",
+    name: "Corta Vento",
+    category: "jaquetas",
+    desc: "Símbolo refletivo e bolso lateral.",
+    sizes: ["M", "G", "GG"],
+    art: "assets/produtos/corta-vento-1.jpg",
+    gallery: [
+      "assets/produtos/corta-vento-1.jpg",
+      "assets/produtos/corta-vento-2.jpg",
+      "assets/produtos/corta-vento-3.jpg",
+    ],
   },
 ];
 
@@ -95,16 +205,19 @@ const CATEGORIES = [
   ["tudo", "Tudo"],
   ["camisetas", "Camisetas"],
   ["polos", "Polos"],
+  ["regatas", "Regatas"],
+  ["bermudas", "Bermudas"],
+  ["calcas", "Calças"],
   ["conjuntos", "Conjuntos"],
+  ["jaquetas", "Jaquetas"],
 ];
 
 const state = {
   category: "tudo",
   query: "",
   /** @type {{id:string,size:string,qty:number}[]} */
-  cart: loadCart(),
-  payment: "pix",
-  installments: 1,
+  list: loadList(),
+  lightbox: { id: null, index: 0 },
 };
 
 const el = (sel) => document.querySelector(sel);
@@ -112,32 +225,33 @@ const grid = el("#grid");
 const filters = el("#filters");
 const emptyMsg = el("#empty");
 const resultCount = el("#resultCount");
-const cartCount = el("#cartCount");
-const cartItems = el("#cartItems");
-const subtotalEl = el("#subtotal");
-const shipNote = el("#shipNote");
+const listCount = el("#listCount");
+const listItems = el("#listItems");
 const drawer = el("#drawer");
 const backdrop = el("#backdrop");
 const toastEl = el("#toast");
-const payField = el("#pay");
-const payExtra = el("#payExtra");
+const lightbox = el("#lightbox");
+const lbImg = el("#lbImg");
+const lbName = el("#lbName");
+const lbCount = el("#lbCount");
+const productById = (id) => PRODUCTS.find((p) => p.id === id);
 
 /* ---------------- persistência ---------------- */
 
-function loadCart() {
+function loadList() {
   try {
     const raw = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
     return Array.isArray(raw)
-      ? raw.filter((it) => it && PRODUCTS.some((p) => p.id === it.id) && it.qty > 0)
+      ? raw.filter((it) => it && productById(it.id) && it.qty > 0)
       : [];
   } catch {
     return [];
   }
 }
 
-function saveCart() {
+function saveList() {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state.cart));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state.list));
   } catch {
     /* modo privado: segue só em memória */
   }
@@ -162,10 +276,6 @@ function renderFilters() {
 }
 
 function cardHTML(p) {
-  const tag = p.tag
-    ? `<span class="tag ${p.tag.startsWith("-") ? "sale" : ""}">${p.tag}</span>`
-    : "";
-  const old = p.oldPrice ? `<span class="old">${money(p.oldPrice)}</span>` : "";
   const sizes = p.sizes
     .map(
       (s, i) =>
@@ -174,17 +284,16 @@ function cardHTML(p) {
     .join("");
   return `
     <article class="card" data-id="${p.id}">
-      <div class="card-media">
+      <button class="card-media" type="button" data-open="${p.id}" aria-label="Ver fotos de ${p.name}">
         <img src="${p.art}" alt="${p.name}" loading="lazy" width="400" height="480" />
-        ${tag}
-      </div>
+        <span class="photos">${p.gallery.length} ${p.gallery.length > 1 ? "fotos" : "foto"}</span>
+      </button>
       <div class="card-body">
         <p class="card-cat">${CATEGORIES.find(([id]) => id === p.category)?.[1] ?? p.category}</p>
         <h3 class="card-name">${p.name}</h3>
         <p class="card-desc">${p.desc}</p>
-        <div class="price-row"><span class="price">${money(p.price)}</span>${old}</div>
         <div class="sizes">${sizes}</div>
-        <button class="btn primary" type="button" data-add="${p.id}">Adicionar</button>
+        <button class="btn primary" type="button" data-add="${p.id}">Adicionar à lista</button>
       </div>
     </article>`;
 }
@@ -193,54 +302,93 @@ function renderGrid() {
   const list = visibleProducts();
   grid.innerHTML = list.map(cardHTML).join("");
   emptyMsg.hidden = list.length > 0;
-  resultCount.textContent = `${list.length} ${list.length === 1 ? "peça" : "peças"}${
-    state.category === "tudo" ? "" : ` em ${CATEGORIES.find(([id]) => id === state.category)?.[1]}`
-  }`;
+  const activeCat = CATEGORIES.find(([id]) => id === state.category)?.[1];
+  const showCount = state.category !== "tudo" && Boolean(activeCat);
+  resultCount.hidden = !showCount;
+  resultCount.textContent = showCount ? `em ${activeCat}` : "";
 }
 
-/* ---------------- sacola ---------------- */
+/* ---------------- galeria ---------------- */
 
-function cartTotal() {
-  return state.cart.reduce((sum, it) => {
-    const p = PRODUCTS.find((x) => x.id === it.id);
-    return sum + (p ? p.price * it.qty : 0);
-  }, 0);
+function openLightbox(id, index = 0) {
+  const p = productById(id);
+  if (!p) return;
+  state.lightbox = { id, index };
+  lightbox.hidden = false;
+  lightbox.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+  paintLightbox();
+  el("#lbClose").focus();
 }
 
-function cartUnits() {
-  return state.cart.reduce((n, it) => n + it.qty, 0);
+function closeLightbox() {
+  lightbox.hidden = true;
+  lightbox.setAttribute("aria-hidden", "true");
+  document.body.style.overflow = drawer.classList.contains("open") ? "hidden" : "";
+  state.lightbox = { id: null, index: 0 };
 }
 
-function addToCart(id, size) {
-  const key = state.cart.find((it) => it.id === id && it.size === size);
+function stepLightbox(delta) {
+  const p = productById(state.lightbox.id);
+  if (!p) return;
+  const n = p.gallery.length;
+  state.lightbox.index = (state.lightbox.index + delta + n) % n;
+  paintLightbox();
+}
+
+function paintLightbox() {
+  const p = productById(state.lightbox.id);
+  if (!p) return;
+  const i = state.lightbox.index;
+  lbImg.src = p.gallery[i];
+  lbImg.alt = `${p.name} — foto ${i + 1}`;
+  lbName.textContent = p.name;
+  lbCount.textContent = `${i + 1} / ${p.gallery.length}`;
+  const multi = p.gallery.length > 1;
+  lightbox.querySelectorAll("[data-lb-prev], [data-lb-next]").forEach((b) => {
+    b.hidden = !multi;
+  });
+  lightbox.querySelectorAll("[data-lb-dot]").forEach((b) => {
+    b.setAttribute("aria-current", String(Number(b.dataset.lbDot) === i));
+  });
+}
+
+/* ---------------- lista de interesse ---------------- */
+
+function listUnits() {
+  return state.list.reduce((n, it) => n + it.qty, 0);
+}
+
+function addToList(id, size) {
+  const key = state.list.find((it) => it.id === id && it.size === size);
   if (key) key.qty += 1;
-  else state.cart.push({ id, size, qty: 1 });
-  saveCart();
-  renderCart();
-  const p = PRODUCTS.find((x) => x.id === id);
-  toast(`${p.name} · ${size} na sacola`);
+  else state.list.push({ id, size, qty: 1 });
+  saveList();
+  renderList();
+  const p = productById(id);
+  toast(`${p.name} · ${size} na lista`);
 }
 
 function setQty(id, size, delta) {
-  const it = state.cart.find((x) => x.id === id && x.size === size);
+  const it = state.list.find((x) => x.id === id && x.size === size);
   if (!it) return;
   it.qty += delta;
-  if (it.qty <= 0) state.cart = state.cart.filter((x) => x !== it);
-  saveCart();
-  renderCart();
+  if (it.qty <= 0) state.list = state.list.filter((x) => x !== it);
+  saveList();
+  renderList();
 }
 
-function renderCart() {
-  const units = cartUnits();
-  cartCount.textContent = String(units);
-  cartCount.style.display = units ? "" : "none";
+function renderList() {
+  const units = listUnits();
+  listCount.textContent = String(units);
+  listCount.style.display = units ? "" : "none";
 
-  if (!state.cart.length) {
-    cartItems.innerHTML = `<p class="cart-empty">Sua sacola está vazia.<br />Escolha uma peça do catálogo.</p>`;
+  if (!state.list.length) {
+    listItems.innerHTML = `<p class="cart-empty">Sua lista está vazia.<br />Escolha as peças do catálogo.</p>`;
   } else {
-    cartItems.innerHTML = state.cart
+    listItems.innerHTML = state.list
       .map((it, idx) => {
-        const p = PRODUCTS.find((x) => x.id === it.id);
+        const p = productById(it.id);
         if (!p) return "";
         return `
         <div class="cart-item" data-idx="${idx}">
@@ -248,7 +396,6 @@ function renderCart() {
           <div>
             <h4>${p.name}</h4>
             <p class="meta">Tamanho ${it.size}</p>
-            <p class="unit">${money(p.price * it.qty)}</p>
             <div class="qty">
               <button type="button" data-dec="${idx}" aria-label="Diminuir quantidade">−</button>
               <span>${it.qty}</span>
@@ -261,53 +408,10 @@ function renderCart() {
       .join("");
   }
 
-  const total = cartTotal();
-  subtotalEl.textContent = money(total);
-  const left = FREE_SHIPPING - total;
-  shipNote.textContent = left > 0 ? `Faltam ${money(left)} para frete grátis.` : "Frete grátis liberado.";
-  el("#checkout").disabled = state.cart.length === 0;
-  renderPayment();
+  el("#checkout").disabled = state.list.length === 0;
 }
 
-/* ---------------- pagamento ---------------- */
-
-function installmentOptions(total) {
-  const out = [];
-  for (let n = 1; n <= MAX_INSTALLMENTS; n++) {
-    const selected = n === state.installments ? "selected" : "";
-    const label = total > 0 ? `${n}x de ${money(total / n)} sem juros` : `${n}x`;
-    out.push(`<option value="${n}" ${selected}>${label}</option>`);
-  }
-  return out.join("");
-}
-
-function renderPayment() {
-  const total = cartTotal();
-  payField.querySelectorAll('input[name="pay"]').forEach((r) => {
-    r.checked = r.value === state.payment;
-  });
-
-  if (state.payment === "pix") {
-    payExtra.innerHTML = `
-      <div class="pix">
-        <p class="pay-label">Chave Pix (telefone)</p>
-        <div class="pix-row">
-          <code id="pixKey">${PIX_KEY}</code>
-          <button class="copy" id="copyPix" type="button">copiar</button>
-        </div>
-        <p class="hint">Pague e envie o comprovante no WhatsApp.</p>
-      </div>`;
-  } else {
-    payExtra.innerHTML = `
-      <label class="inst">
-        <span class="pay-label">Parcelas</span>
-        <select id="instSel">${installmentOptions(total)}</select>
-      </label>
-      <p class="hint">A loja envia o link de pagamento no WhatsApp. Os dados do cartão não passam por aqui.</p>`;
-  }
-}
-
-function openCart() {
+function openList() {
   drawer.classList.add("open");
   drawer.setAttribute("aria-hidden", "false");
   backdrop.hidden = false;
@@ -315,36 +419,26 @@ function openCart() {
   el("#cartClose").focus();
 }
 
-function closeCart() {
+function closeList() {
   drawer.classList.remove("open");
   drawer.setAttribute("aria-hidden", "true");
   backdrop.hidden = true;
-  document.body.style.overflow = "";
+  if (lightbox.hidden) document.body.style.overflow = "";
 }
 
 /* ---------------- pedido no WhatsApp ---------------- */
 
 function buildOrderMessage() {
-  const total = cartTotal();
-  const items = state.cart.map((it) => {
-    const p = PRODUCTS.find((x) => x.id === it.id);
-    return `• ${it.qty}x ${p.name} — Tam ${it.size} — ${money(p.price * it.qty)}`;
+  const items = state.list.map((it) => {
+    const p = productById(it.id);
+    return `• ${it.qty}x ${p.name} — Tam ${it.size}`;
   });
-  const frete = total >= FREE_SHIPPING ? "grátis" : "a combinar";
-  const pagamento =
-    state.payment === "pix"
-      ? "Pix (chave " + PIX_KEY + ")"
-      : `Cartão de crédito — ${state.installments}x de ${money(total / state.installments)}`;
   return [
-    "Olá! Quero fazer um pedido na WRBLESSED:",
+    "Olá! Vi o catálogo da WRBLESSED e quero estas peças:",
     "",
     ...items,
     "",
-    `Subtotal: ${money(total)}`,
-    `Frete: ${frete}`,
-    `Pagamento: ${pagamento}`,
-    "",
-    "Pode confirmar a disponibilidade e como sigo com o pagamento?",
+    "Pode me confirmar disponibilidade, valores e como sigo?",
   ].join("\n");
 }
 
@@ -353,13 +447,12 @@ function buildOrderUrl() {
 }
 
 function checkoutOnWhatsApp() {
-  if (!state.cart.length) {
-    toast("Sua sacola está vazia");
+  if (!state.list.length) {
+    toast("Sua lista está vazia");
     return;
   }
-  const url = buildOrderUrl();
-  window.open(url, "_blank", "noopener");
-  toast("Abrindo o WhatsApp com o pedido");
+  window.open(buildOrderUrl(), "_blank", "noopener");
+  toast("Abrindo o WhatsApp com a lista");
 }
 
 /* ---------------- toast ---------------- */
@@ -400,6 +493,11 @@ el("#search").addEventListener("input", (e) => {
 });
 
 grid.addEventListener("click", (e) => {
+  const media = e.target.closest("[data-open]");
+  if (media) {
+    openLightbox(media.dataset.open, 0);
+    return;
+  }
   const sizeBtn = e.target.closest(".size");
   if (sizeBtn) {
     const card = sizeBtn.closest(".card");
@@ -418,80 +516,119 @@ grid.addEventListener("click", (e) => {
     toast("Escolha um tamanho primeiro");
     return;
   }
-  addToCart(addBtn.dataset.add, chosen.dataset.size);
+  addToList(addBtn.dataset.add, chosen.dataset.size);
 });
 
-cartItems.addEventListener("click", (e) => {
+lightbox.addEventListener("click", (e) => {
+  if (e.target.closest("[data-lb-close]")) {
+    closeLightbox();
+    return;
+  }
+  if (e.target.closest("[data-lb-prev]")) {
+    stepLightbox(-1);
+    return;
+  }
+  if (e.target.closest("[data-lb-next]")) {
+    stepLightbox(1);
+    return;
+  }
+  const dot = e.target.closest("[data-lb-dot]");
+  if (dot) {
+    state.lightbox.index = Number(dot.dataset.lbDot);
+    paintLightbox();
+  }
+});
+
+listItems.addEventListener("click", (e) => {
   const inc = e.target.closest("[data-inc]");
   const dec = e.target.closest("[data-dec]");
   const rem = e.target.closest("[data-remove]");
   if (inc) {
-    const it = state.cart[Number(inc.dataset.inc)];
+    const it = state.list[Number(inc.dataset.inc)];
     if (it) setQty(it.id, it.size, +1);
   } else if (dec) {
-    const it = state.cart[Number(dec.dataset.dec)];
+    const it = state.list[Number(dec.dataset.dec)];
     if (it) setQty(it.id, it.size, -1);
   } else if (rem) {
-    const it = state.cart[Number(rem.dataset.remove)];
+    const it = state.list[Number(rem.dataset.remove)];
     if (it) {
-      state.cart = state.cart.filter((x) => x !== it);
-      saveCart();
-      renderCart();
+      state.list = state.list.filter((x) => x !== it);
+      saveList();
+      renderList();
     }
   }
 });
 
-el("#cartOpen").addEventListener("click", openCart);
-el("#cartClose").addEventListener("click", closeCart);
-payField.addEventListener("change", (e) => {
-  if (e.target.name !== "pay") return;
-  state.payment = e.target.value;
-  state.installments = 1;
-  renderPayment();
-});
-payExtra.addEventListener("change", (e) => {
-  if (e.target.id === "instSel") state.installments = Number(e.target.value);
-});
-payExtra.addEventListener("click", async (e) => {
-  if (!e.target.closest("#copyPix")) return;
-  try {
-    await navigator.clipboard.writeText(PIX_KEY);
-    toast("Chave Pix copiada");
-  } catch {
-    toast(`Chave Pix: ${PIX_KEY}`);
-  }
-});
+el("#cartOpen").addEventListener("click", openList);
+el("#cartClose").addEventListener("click", closeList);
 el("#checkout").addEventListener("click", checkoutOnWhatsApp);
-backdrop.addEventListener("click", closeCart);
+backdrop.addEventListener("click", closeList);
+
 document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && drawer.classList.contains("open")) closeCart();
+  if (!lightbox.hidden) {
+    if (e.key === "Escape") closeLightbox();
+    else if (e.key === "ArrowLeft") stepLightbox(-1);
+    else if (e.key === "ArrowRight") stepLightbox(1);
+    return;
+  }
+  if (e.key === "Escape" && drawer.classList.contains("open")) closeList();
 });
 
 /* ---------------- boot ---------------- */
 
+// Hero: troca entre as capas do catálogo, com fade suave.
+const HERO_ARTS = [...new Set(PRODUCTS.map((p) => p.art))];
+const HERO_INTERVAL_MS = 4500;
+const HERO_FADE_MS = 280;
+
+function rotateHero() {
+  const img = document.getElementById("heroArt");
+  if (!img || HERO_ARTS.length < 2) return;
+  // Pré-carrega as capas para a troca não piscar vazio.
+  HERO_ARTS.forEach((src) => {
+    const pre = new Image();
+    pre.src = src;
+  });
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  let current = img.getAttribute("src");
+  setInterval(() => {
+    const pool = HERO_ARTS.filter((src) => src !== current);
+    const next = pool[Math.floor(Math.random() * pool.length)];
+    current = next;
+    // sai em fade, troca o src no escuro, volta em fade
+    img.classList.add("is-out");
+    setTimeout(() => {
+      img.src = next;
+      const reveal = () => setTimeout(() => img.classList.remove("is-out"), 20);
+      if (img.complete) reveal();
+      else img.onload = reveal;
+    }, HERO_FADE_MS);
+  }, HERO_INTERVAL_MS);
+}
+
+rotateHero();
+
 renderFilters();
 renderGrid();
-renderCart();
+renderList();
 
 // Superfície para teste manual no console / automação.
 window.__shop = {
   products: PRODUCTS,
   state,
-  addToCart,
+  addToList,
   setQty,
   renderGrid,
-  renderCart,
-  openCart,
-  closeCart,
+  renderList,
+  openList,
+  closeList,
+  openLightbox,
+  closeLightbox,
+  stepLightbox,
   buildOrderMessage,
   buildOrderUrl,
   checkoutOnWhatsApp,
-  renderPayment,
-  setPayment(method, installments = 1) {
-    state.payment = method;
-    state.installments = Math.min(MAX_INSTALLMENTS, Math.max(1, installments));
-    renderPayment();
-  },
   selectCategory(cat) {
     state.category = cat;
     renderFilters();
